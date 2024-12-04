@@ -4,6 +4,8 @@
 <img src="images/KM.jpeg" alt="Group photo in front of KM" width="400">
 </div>
 
+### [Final Project Link](https://keanuryt.github.io/blog/) via Keanu's Website 
+
 ### Project Description 
 
 The island mass effect is said to enrich near shore waters with island derived materials. 
