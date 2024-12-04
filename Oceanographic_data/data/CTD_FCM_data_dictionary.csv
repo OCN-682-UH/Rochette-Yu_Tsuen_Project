@@ -1,0 +1,7 @@
+﻿Variable Name;Description;Units ;Notes
+station;sampling station;;
+depth;depth;m;
+microbe;type of microbe (pro, syn, hbac or pico euk);;
+rel_abun;relative abundance of a microbe at a site and depth ;;
+parameter;physical parameter measured ;pressure, PAR, Temperature, oxygen, oxygen saturation, fluorescence;
+values;measurement of a given parameter;dbar,  umol photons/m^2/sec, °C, umol/kg, %saturation, unit-less;

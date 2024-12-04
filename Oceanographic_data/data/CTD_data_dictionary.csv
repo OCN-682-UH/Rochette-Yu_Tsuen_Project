@@ -1,0 +1,13 @@
+﻿Variable Name;Description;Units ;Notes
+depth_cat;Depth;m ;
+station;sampling station label;;
+time_s;total time measuring variables at a station's depth;;
+date;date;YYYY-MM-DD;
+pressure;pressure;dbar;
+descent_rate;descent rate of the CTD;m/s;
+PAR;phototosynthetically active radiation/ irradiance;umol photons/m^2/sec;
+temp;temperature;°C;
+density;seawater density;kg/m^3;
+oxygen_conc;oxygen concentration ;umol/kg;
+perc_ox_sat;oxygen saturation;% saturation;
+fluorescence;Fluorescence;;

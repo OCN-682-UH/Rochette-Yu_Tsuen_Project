@@ -1,0 +1,7 @@
+﻿Variable Name;Description;Units ;Notes
+site;Sampling Station;;
+depth;Depth;m;
+hbac_rel_abun;Relative abundance by site and by depth of Heterotrophic Bacteria;decimal;
+pico_euk_rel_abun;Relative abundance by site and by depth of Pico Eukaryotes;decimal;
+syn_rel_abun;Relative abundance by site and by depthof Synechococcus;decimal;
+pro_rel_abun;Relative abundance by site and by depth of Prochlorococcus;decimal;

@@ -17,7 +17,7 @@ library(tidyverse)
 library(here)
 library(janitor)
 library(openxlsx) 
-
+library(gt)
 ```
 
 
@@ -28,8 +28,7 @@ library(openxlsx)
 asc_to_csv <- function(filename){
   
 # Specify the file paths
-asc_file <- here("Final_project", "data", "ctd_data", filename)  
-#csv_file <- here("Final_project", "data", "ctd_data") 
+asc_file <- here("Oceanographic_data", "data","raw_data","ctd_data", filename)  
 
 # Read the .asc file
 data <- read.table(asc_file, sep = ",")  
@@ -42,7 +41,7 @@ filename <- str_replace_all(filename, "\\.|[a-z]{3}", "")
 filename <- str_trim(filename)
 
 # Write to a .csv file
-write.csv(data, file = here("Final_project", "data", "ctd_data", 
+write.csv(data, file = here("Oceanographic_data", "data","raw_data","ctd_data",
                             paste(filename, ".csv")))
 
 }
@@ -67,14 +66,13 @@ asc_to_csv(filename = "km2315_D_1500m.asc.csv")
 
 #Load Data
 ```{r}
-CTD_A1 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_A_1_200m.csv"))
-CTD_A2 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_A_2_200m.csv"))
-CTD_B1 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_B_1_250m.csv"))
-CTD_B2 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_B_2_250m.csv"))
-CTD_C1 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_C_1_250m.csv"))
-CTD_C2 <- read_csv(here("Final_project", "data", "ctd_data", "km2315_C_2_250m.csv"))
-CTD_D <- read_csv(here("Final_project", "data", "ctd_data", "km2315_D_1500m.csv"))
-#CTD_wut <- read_csv(here("Final_project", "data", "ctd_data", "km2315_05_500m.csv"))
+CTD_A1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_A_1_200m.csv"))
+CTD_A2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_A_2_200m.csv"))
+CTD_B1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_B_1_250m.csv"))
+CTD_B2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_B_2_250m.csv"))
+CTD_C1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_C_1_250m.csv"))
+CTD_C2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_C_2_250m.csv"))
+CTD_D <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_D_1500m.csv"))
 
 
 ```
@@ -150,7 +148,7 @@ CTD <- rbind(CTD_A1 ,CTD_A2, CTD_B1,CTD_B2, CTD_C1, CTD_C2, CTD_D)
 CTD <- CTD %>% group_by(depth_cat, station) %>% 
   summarise_all(mean) %>% ungroup() 
   
-write_csv(CTD, here("Final_project", "data", "CTD.csv"))
+write_csv(CTD, here("Oceanographic_data", "data", "CTD.csv"))
   
 ```
 
@@ -159,12 +157,12 @@ write_csv(CTD, here("Final_project", "data", "CTD.csv"))
 
 # Load the Data
 ```{r}
-fcm <- read_csv(here("Final_project", "data", "km2315_fcm_data.csv"), locale=locale(encoding="latin1"), skip = 2)
+fcm <- read_csv(here("Oceanographic_data", "data","raw_data","fcm_data", "km2315_fcm_data.csv"), locale=locale(encoding="latin1"), skip = 2)
 
-site_depth <- read_csv(here("Final_project", "data", "wells_dataframe.csv"))
+site_depth <- read_csv(here("Oceanographic_data", "data","raw_data","fcm_data", "wells_dataframe.csv"))
 
 #only keep the 1/4L(V)
-# realevents = (include - hoechst junk - chlorophyll junk)
+# relevents = (include - hoechst junk - chlorophyll junk)
 ```
 
 # Clean the column names of the files
@@ -224,7 +222,7 @@ fcm <- fcm  %>%
 
 # Create a new .csv file with clean data
 ```{r}
-write_csv(fcm, here("Final_project", "data", "fcm.csv"))
+write_csv(fcm, here("Oceanographic_data", "data", "fcm.csv"))
 ```
 
 ################# Data Clean-Up for CTD and FCM Data ####################
@@ -232,8 +230,8 @@ write_csv(fcm, here("Final_project", "data", "fcm.csv"))
 
 # Load the data
 ```{r}
-CTD <- read_csv(here("Final_project", "data", "CTD.csv"))
-fcm <- read_csv(here("Final_project", "data", "fcm.csv"))
+CTD <- read_csv(here("Oceanographic_data", "data", "CTD.csv"))
+fcm <- read_csv(here("Oceanographic_data", "data", "fcm.csv"))
 ```
 
 # Pivoting the dataframe and giving prettier names to the microbes
@@ -281,9 +279,6 @@ CTD_FCM<- left_join(fcm, CTD, by = c("depth", "station"))
 
 # Write new CSV with the combined data 
 ```{r}
-write.csv(CTD_FCM, here("Final_project", "data", "CTD_FCM.csv"))
+write.csv(CTD_FCM, here("Oceanographic_data", "data", "CTD_FCM.csv"))
 ```
-
-
-
 
