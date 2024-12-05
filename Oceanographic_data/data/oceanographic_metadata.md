@@ -8,14 +8,14 @@ Keanu Rochette
 **PI**: Craig Nelson  
 **Ship**: Kilo Moana  
 **Cruise ID**: KM2315  
-**Dates**: 2O23-09-23 to 2O23-09-26
+**Dates**: 2023-09-23 to 2023-09-26
 
 **Station Locations**:
 
-- Station A:  
-- Station B:  
-- Station C:  
-- Deep Cast:
+- Station A: 21 21.28 N, 158 08.90 W  
+- Station B: 21 20.62 N, 158 11.86 W  
+- Station C: 21 18.08 N, 158 21.92 W  
+- Deep Cast: 21 14.27 N, 158 36.42 W
 
 ## 2023-09-23 Cast
 
