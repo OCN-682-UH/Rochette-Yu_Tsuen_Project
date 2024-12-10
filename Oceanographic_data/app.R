@@ -14,7 +14,7 @@ library(shinythemes)
 fcm <- read_csv(here("data", "fcm.csv"))
 CTD <- read_csv(here("data", "CTD.csv"))
 CTD_FCM <- read_csv(here("data", "CTD_FCM.csv"))
-
+fcm_long <- read_csv(here("data", "fcm_long.csv"))
 # Define UI 
 ui <- fluidPage(
   
@@ -116,11 +116,8 @@ ui <- fluidPage(
            #adding drop down menu  
            selectInput(inputId = "rel_abun", 
                        label = h5("Select a Microbe"), 
-                       choices = list("Prochlorococcus" = "pro_rel_abun", 
-                                      "Synechococcus" = "syn_rel_abun", 
-                                      "Heterotrophic Bacteria" = "hbac_rel_abun",
-                                      "Pico Eukaryotes"= "pico_euk_rel_abun")), 
-           selected = "Prochlorococcus"),
+                       choices = unique(sort(fcm_long$microbes)), 
+           selected = "Prochlorococcus")),
     
     column(9, 
            #violin plot space
@@ -281,11 +278,8 @@ server <- function(input, output) {
   ## Violin plot
   ### Indicates reactive elements in the code  
   fcm_violin <- reactive({
-    fcm %>% pivot_longer(cols = hbac_rel_abun:pro_rel_abun,
-                         names_to = "Microbes",
-                         values_to = "rel_abun") %>% 
-      filter(Microbes == input$rel_abun)
-    
+    fcm_long %>% 
+      filter(microbes == input$rel_abun) 
   })
   
   ### coding the violin plot to render   

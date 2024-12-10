@@ -1,0 +1,5 @@
+﻿Variable Name;Description;Units ;Notes 
+site;Sampling Station name;;
+depth;Depth;m;
+microbes;Taxa of microbe ;Prochlorococcus, Synechococcus, Heterotrophic Bacteria, Pico Eukaryote;
+rel_abun;Relative abundance by site and by depth of a microbe;decimals ;

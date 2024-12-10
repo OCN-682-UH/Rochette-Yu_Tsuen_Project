@@ -282,3 +282,28 @@ CTD_FCM<- left_join(fcm, CTD, by = c("depth", "station"))
 write.csv(CTD_FCM, here("Oceanographic_data", "data", "CTD_FCM.csv"))
 ```
 
+
+# To do the microbe distribution plots I needed all my microbes in one column
+```{r}
+fcm <- read_csv(here("Oceanographic_data", "data", "fcm.csv"))
+```
+
+# Putting all the microbes in one column
+```{r}
+fcm_long <- fcm %>% rename(
+  Prochlorococcus = pro_rel_abun,
+  Synechococcus = syn_rel_abun,
+  `Pico Eukaryote` = pico_euk_rel_abun,
+  `Heterotrophic Bacteria` = hbac_rel_abun) %>% 
+  pivot_longer(cols = Prochlorococcus:`Heterotrophic Bacteria`,
+               names_to = "microbes",
+               values_to = "rel_abun")
+
+
+```
+
+# Writing a new file
+```{r}
+write_csv(fcm_long, here("Oceanographic_data", "data", "fcm_long.csv"))
+```
+
