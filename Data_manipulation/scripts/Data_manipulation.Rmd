@@ -28,7 +28,7 @@ library(gt)
 asc_to_csv <- function(filename){
   
 # Specify the file paths
-asc_file <- here("Oceanographic_data", "data","raw_data","ctd_data", filename)  
+asc_file <- here("Data_manipulation", "raw_data","ctd_data", filename)  
 
 # Read the .asc file
 data <- read.table(asc_file, sep = ",")  
@@ -41,7 +41,7 @@ filename <- str_replace_all(filename, "\\.|[a-z]{3}", "")
 filename <- str_trim(filename)
 
 # Write to a .csv file
-write.csv(data, file = here("Oceanographic_data", "data","raw_data","ctd_data",
+write.csv(data, file = here("Data_manipulation","raw_data","ctd_data",
                             paste(filename, ".csv")))
 
 }
@@ -66,13 +66,13 @@ asc_to_csv(filename = "km2315_D_1500m.asc.csv")
 
 #Load Data
 ```{r}
-CTD_A1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_A_1_200m.csv"))
-CTD_A2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_A_2_200m.csv"))
-CTD_B1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_B_1_250m.csv"))
-CTD_B2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_B_2_250m.csv"))
-CTD_C1 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_C_1_250m.csv"))
-CTD_C2 <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_C_2_250m.csv"))
-CTD_D <- read_csv(here("Oceanographic_data", "data","raw_data","ctd_data", "km2315_D_1500m.csv"))
+CTD_A1 <- read_csv(here("Data_manipulation", "raw_data", "ctd_data", "km2315_A_1_200m.csv"))
+CTD_A2 <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_A_2_200m.csv"))
+CTD_B1 <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_B_1_250m.csv"))
+CTD_B2 <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_B_2_250m.csv"))
+CTD_C1 <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_C_1_250m.csv"))
+CTD_C2 <- read_csv(here("Data_manipulation","raw_data","ctd_data", "km2315_C_2_250m.csv"))
+CTD_D <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_D_1500m.csv"))
 
 
 ```
@@ -115,27 +115,46 @@ CTD_data_cleaner <- function(dataset){
 # Apply the function to the numerous files and clean up the data 
 ```{r}
 CTD_A1 <- CTD_data_cleaner(CTD_A1)
-CTD_A1 <- CTD_A1 %>% mutate(station = "A")
+CTD_A1 <- CTD_A1 %>% mutate(station = "A1")
 
 CTD_A2 <- CTD_data_cleaner(CTD_A2)
-CTD_A2<-CTD_A2 %>% mutate(station = "A")
+CTD_A2<-CTD_A2 %>% mutate(station = "A2")
 
 CTD_B1 <- CTD_data_cleaner(CTD_B1)
-CTD_B1 <-CTD_B1 %>% mutate(station = "B")
+CTD_B1 <-CTD_B1 %>% mutate(station = "B1")
 
 CTD_B2 <- CTD_data_cleaner(CTD_B2)
-CTD_B2<-CTD_B2 %>% mutate(station = "B")
+CTD_B2<-CTD_B2 %>% mutate(station = "B2")
 
 CTD_C1 <- CTD_data_cleaner(CTD_C1)
-CTD_C1 <-CTD_C1 %>% mutate(station = "C")
+CTD_C1 <-CTD_C1 %>% mutate(station = "C1")
 
 CTD_C2 <- CTD_data_cleaner(CTD_C2)
-CTD_C2<- CTD_C2 %>% mutate(station = "C")
+CTD_C2<- CTD_C2 %>% mutate(station = "C2")
 
 CTD_D <- CTD_data_cleaner(CTD_D)
 CTD_D <- CTD_D %>% mutate(station = "Deep")
 
 ```
+
+## Saving the files for Devin
+
+```{}
+write_csv(CTD_A1, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_A_1_200m.csv"))
+
+write_csv(CTD_A2, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_A_2_200m.csv"))
+
+write_csv(CTD_B1, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_B_1_250m.csv"))
+
+write_csv(CTD_B2, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_B_2_250m.csv"))
+
+write_csv(CTD_C1, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_C_1_250m.csv"))
+
+write_csv(CTD_C2, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_C_2_250m.csv"))
+
+write_csv(CTD_D, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_D_1500m.csv"))
+```
+
 
 # Combining all the CTD data into one file 
 ```{r}
@@ -260,6 +279,45 @@ CTD <- CTD %>% select(-time_s, -date, -descent_rate, - density) %>%
                names_to = "parameter",
                values_to = "values")
 ```
+
+
+```{r}
+## CTD Graph
+CTD %>% 
+      mutate(station = as.factor(station)) %>% 
+      filter(station == "A") %>% 
+  ggplot(aes(x= depth_cat)) +
+  geom_point(aes(y = temp), color = "#FF9800") +
+          geom_line(aes(y = temp), color = "#FF9800")+
+  coord_flip()+
+  labs( title= "Oceanographic Profile",
+            x = "Depth (m)",
+            y = "Variables") +
+      coord_flip()+
+      theme_bw() + 
+      theme(plot.title = element_text(size=14, face = "bold"), 
+            plot.subtitle = element_text(size=12),
+            axis.title = element_text(size = 12, face = "bold"),
+            axis.text = element_text(size = 12),
+            strip.text.x = element_text(size = 12, face = "bold"),
+            legend.title=element_text(size=12, face = "bold"),
+            legend.text=element_text(size=12),
+            panel.background = element_rect(fill = "azure1"))
+  
+```
+
+```{r}
+      #### Define color mapping for each parameter
+color_mapping <- c(
+        "temp" = "#FF9800",
+        "PAR" = "#FFE082",
+        "pressure" = "#607D8B",
+        "oxygen_conc" = "#4DB6AC",
+        "perc_ox_sat" = "#4DD0E1",
+        "fluorescence" = "#4CAF50")
+      
+```
+
 
 
 # Last clean up for FCM data and merging FCM an CTD data
