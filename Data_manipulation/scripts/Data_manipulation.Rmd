@@ -42,7 +42,7 @@ filename <- str_trim(filename)
 
 # Write to a .csv file
 write.csv(data, file = here("Data_manipulation","raw_data","ctd_data",
-                            paste(filename, ".csv")))
+                            paste0(filename, ".csv")))
 
 }
 
@@ -60,7 +60,8 @@ asc_to_csv(filename = "km2315_C_2_250m.asc.csv")
 asc_to_csv(filename = "km2315_D_1500m.asc.csv")
 
 #Note: Somehow the file names have a space before the ".csv" and I don't know how 
-# to fix that. So I manually removed the spaces
+# to fix that. So I manually removed the spaces. 
+# Update: paste0() should do the trick
 ```
 
 
@@ -94,7 +95,7 @@ CTD_data_cleaner <- function(dataset){
          PAR = par,
          fluorescence = fl_sp) %>% 
     select(time_s, date, pressure, descent_rate, PAR, 
-         temp, density, oxygen_conc, perc_ox_sat, fluorescence)  
+         temp, density, oxygen_conc, perc_ox_sat, fluorescence, c_star_at0, c_star_tr0)  
   
     breaks <- seq(from = 0, to = max(df$pressure), by = 0.5)
     
@@ -115,19 +116,19 @@ CTD_data_cleaner <- function(dataset){
 # Apply the function to the numerous files and clean up the data 
 ```{r}
 CTD_A1 <- CTD_data_cleaner(CTD_A1)
-CTD_A1 <- CTD_A1 %>% mutate(station = "A1")
+CTD_A1 <- CTD_A1 %>% mutate(station = "A1") 
 
 CTD_A2 <- CTD_data_cleaner(CTD_A2)
-CTD_A2<-CTD_A2 %>% mutate(station = "A2")
+CTD_A2<-CTD_A2 %>% mutate(station = "A2") 
 
 CTD_B1 <- CTD_data_cleaner(CTD_B1)
-CTD_B1 <-CTD_B1 %>% mutate(station = "B1")
+CTD_B1 <-CTD_B1 %>% mutate(station = "B1") 
 
 CTD_B2 <- CTD_data_cleaner(CTD_B2)
-CTD_B2<-CTD_B2 %>% mutate(station = "B2")
+CTD_B2<-CTD_B2 %>% mutate(station = "B2") 
 
 CTD_C1 <- CTD_data_cleaner(CTD_C1)
-CTD_C1 <-CTD_C1 %>% mutate(station = "C1")
+CTD_C1 <-CTD_C1 %>% mutate(station = "C1") 
 
 CTD_C2 <- CTD_data_cleaner(CTD_C2)
 CTD_C2<- CTD_C2 %>% mutate(station = "C2")
