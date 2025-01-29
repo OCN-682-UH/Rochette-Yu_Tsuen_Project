@@ -78,6 +78,32 @@ CTD_D <- read_csv(here("Data_manipulation", "raw_data","ctd_data", "km2315_D_150
 
 ```
 
+## Only keep the down cast 
+
+```{r}
+max_time <- CTD_A1 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_A1 <- CTD_A1 %>% filter(time_s < max_time)
+
+max_time <- CTD_A2 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_A2 <- CTD_A2 %>% filter(time_s < max_time)
+
+max_time <- CTD_B1 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_B1 <- CTD_B1 %>% filter(time_s < max_time)
+
+max_time <- CTD_B2 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_B2 <- CTD_B2 %>% filter(time_s < max_time)
+
+max_time <- CTD_C1 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_C1 <- CTD_C1 %>% filter(time_s < max_time)
+
+max_time <- CTD_C2 %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_C2 <- CTD_C2 %>% filter(time_s < max_time)
+
+max_time <- CTD_D %>% filter(pr_dm == max(pr_dm)) %>% pull(time_s)
+CTD_D <- CTD_D %>% filter(time_s < max_time)
+
+```
+
 # Create a function to automate the clean up the CTD data
 ```{r}
 
@@ -138,9 +164,10 @@ CTD_D <- CTD_D %>% mutate(station = "Deep")
 
 ```
 
+
 ## Saving the files for Devin
 
-```{}
+```{r}
 write_csv(CTD_A1, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_A_1_200m.csv"))
 
 write_csv(CTD_A2, file = here("Data_manipulation", "raw_data", "ctd_data", "Devin", "km2315_A_2_200m.csv"))
